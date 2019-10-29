@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="LojaJogos:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>LojaJogos</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="LojaJogos-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="LojaJogos:war exploded" />
+    </root>
+  </artifact>
+</component>

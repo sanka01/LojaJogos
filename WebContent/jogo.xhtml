@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:head>
+    <title>Index</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8"/>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap CSS -->
+    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
+    <!-- Costumize CSS -->
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+    <!-- Just an image -->
+    <nav class="navbar navbar-dark bg-dark">
+        <h:link outcome="index" styleClass="navbar-brand">
+            <img src="resources/images/logo.svg" width="80" height="80" alt=""/>
+        </h:link>
+        <div class="navbar-expand" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item ">
+                    <h:link outcome="index" value="Loja" styleClass="nav-link"/>
+                </li>
+                <li class="nav-item">
+                    <h:link outcome="biblioteca" styleClass="nav-link" value="Biblioteca"/>
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="Perfil" outcome="perfil"/>
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link" value="Carrinho" outcome="carrinho"/>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container container-fluid ">
+        <h:graphicImage styleClass="img-fluid"
+                        value="resources/images/JhonWickHex.jpg"/>
+
+        <br/>
+        <br/>
+        <div>
+            <h3> SEJA O BABA YAGA</h3>
+            <p> John Wick Hex é um jogo de estratégia ágil com foco em ação e que faz você pensar e atacar como John Wick, o assassino profissional da série de filmes aclamada pela crítica.
+                Desenvolvido em colaboração com as equipes criativas por trás dos filmes, John Wick Hex é um xadrez com coreografia de luta que ganha vida como um videogame,
+                capturando o estilo característico de “kung-fu de armas de fogo” e expandindo a história do universo da série. O jogador deverá tomar decisões rápidas e escolher cada ação e ataque para realizar,
+                sempre pensando no custo imediato e em suas consequências.</p>
+            <p> Com uma combinação única de combate estratégico de momento, John Wick Hex captura a sensação do combate tático dos filmes e apaga os limites entre os gêneros de videogame de ação e de estratégia.
+                Tenha um bom desempenho e avance no modo de história principal (com uma história original criada para o jogo) para desbloquear novas armas, opções de trajes e locais. Suas táticas e sua maneira de jogar mudarão de acordo com a arma escolhida.
+                A munição é infinita e simulada com realismo, então recarregue na hora certa e use bem as armas que encontrar em seu trabalho.</p>
+            <p> Vivencie uma história nova e original que se passa antes dos eventos dos filmes e narra John em uma missão desesperada para resgatar Winston e Charon de um novo e poderoso inimigo que está em busca do seu direito inato.
+                A história ganha vida por meio das talentosas e renomadas vozes de Ian McShane e Lance Reddick, representando os mesmos papéis icônicos dos filmes, e da lendária interpretação de Troy Baker,
+                que se junta a esse elenco brilhante como o vilão epônimo do jogo, "Hex". John Wick Hex enaltece o estilo dos filmes com um design de arte único feito em ilustrações noir e trilha sonora original elaborada pelo prestigiado
+                compositor Austin Wintory.</p>
+        </div>
+
+        <br/>
+
+        <div class="card" style="width: 18rem;">
+            <h1 class="alert alert-dark text-dark">Sobre o Jogo</h1>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <h:outputLabel value="Tags: " styleClass="card-header"/>
+                    <h:outputLabel value="Estrategia, Ação"/>
+                </li>
+                <li class="list-group-item">
+                    <h:outputLabel value="Classificação:" styleClass="card-header"/>
+                    <h:outputLabel value="Não Definida"/>
+                </li>
+                <li class="list-group-item">
+                    <h:outputLabel value="Data de Lançamento" styleClass="card-header"/>
+                    <h:outputLabel value="08 de out de 2019"/>
+                </li>
+
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+</h:body>
+</html>
