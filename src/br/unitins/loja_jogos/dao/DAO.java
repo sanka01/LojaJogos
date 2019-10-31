@@ -1,4 +1,4 @@
-package dao;
+package br.unitins.loja_jogos.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,7 +11,7 @@ public abstract class DAO<T>{
 	public abstract void create(T entity) throws SQLException;
 	public abstract void update(T entity) throws SQLException;
 	public abstract void delete(int id) throws SQLException;
-	public abstract List<T> findAll();
+	public abstract List<T> findAll() throws SQLException;
 	private Connection conn = null;
 	
 	public DAO(Connection conn) {
@@ -24,7 +24,7 @@ public abstract class DAO<T>{
 				// registrando o drive do prostgres
 				Class.forName("org.postgresql.Driver");
 				// estabelecendo uma conexao com o banco de dados
-				conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/lojaJogos",
+				conn = DriverManager.getConnection("jdbc:postgresql://127.0.0.1:5432/lojajogos",
 								"topicos", "123456");
 				// obriga a trabalhar com commit e rollback
 				conn.setAutoCommit(false);
@@ -34,7 +34,7 @@ public abstract class DAO<T>{
 				conn = null;
 				e.printStackTrace();
 			} catch (ClassNotFoundException e) {
-				System.out.println("Fala ao resgistrar o Driver do banco");
+				System.out.println("Falha ao resgistrar o Driver do banco");
 				conn = null;
 				e.printStackTrace();
 			}

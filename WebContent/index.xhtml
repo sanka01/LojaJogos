@@ -1,79 +1,120 @@
 <!DOCTYPE html>
 <html lang="pt-br"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:f="http://java.sun.com/jsp/jstl/core">
-<h:head>
-    <title>Index</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8"/>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-
-    <!-- Bootstrap CSS -->
-    <h:outputStylesheet library="css" name="bootstrap.min.css"/>
-    <!-- Costumize CSS -->
-    <h:outputStylesheet library="css" name="style.css"/>
-</h:head>
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
 <h:body>
+    <ui:composition template="template.xhtml">
 
-    <nav class="navbar navbar-dark bg-dark">
-        <h:link outcome="index" styleClass="navbar-brand">
-            <img src="resources/images/logo.svg" width="80" height="80" alt=""/>
-        </h:link>
-        <div class="navbar-expand" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <h:link outcome="index" value="Loja" styleClass="nav-link"/>
-                </li>
-                <li class="nav-item">
-                    <h:link outcome="biblioteca" styleClass="nav-link" value="Biblioteca"/>
-                </li>
-                <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Perfil" outcome="perfil"/>
-                </li>
-                <li class="nav-item">
-                    <h:link styleClass="nav-link" value="Carrinho" outcome="carrinho"/>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <div class="container container-fluid ">
-
-        <div class="col-12">
-            <h:panelGrid styleClass="table-borderless" columns="3">
-
-                <h:link outcome="jogo">
-                    <h:graphicImage styleClass="img-thumbnail"
-                                    value="resources/images/JhonWickHex.jpg">
-                        <h:outputLabel value="Jogo 1" styleClass="btn link "/>
-                    </h:graphicImage>
-                </h:link>
-                <h:link outcome="jogo">
-                    <h:graphicImage styleClass="img-thumbnail"
-                                    value="resources/images/JhonWickHex.jpg">
-                        <h:outputLabel value="Jogo 2" styleClass="btn link "/>
-                    </h:graphicImage>
-                </h:link>
-
-                <h:link outcome="jogo">
-                    <h:graphicImage styleClass="img-thumbnail"
-                                    value="resources/images/JhonWickHex.jpg">
-                        <h:outputLabel value="Jogo 3" styleClass="btn link"/>
-                    </h:graphicImage>
-                </h:link>
-
-            </h:panelGrid>
-        </div>
+        <ui:define name="conteudo">
 
 
-    </div>
+            <div class="col-12">
+                <h:form id="formulario">
+                    <h:panelGrid id="panelPrincipal" columns="2" styleClass="border_solid">
+                        <h:outputLabel styleClass="text" value="Nome:"/>
+                        <h:inputText styleClass="border input"
+                                     value="#{indexController.jogo.nome}"/>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
+                        <h:outputLabel styleClass="text" value="Descrição: "/>
+                        <h:inputTextarea styleClass="border input text-area"
+                                         value="#{indexController.jogo.descricao}"/>
+
+                        <h:outputLabel styleClass="text" value="Plataforma: "/>
+                        <h:inputText styleClass="border input"
+                                       value="#{indexController.jogo.tipo}"/>
+
+                        <h:outputLabel styleClass="text" value="Valor: "/>
+                        <h:inputText styleClass="border input"
+                                     value="#{indexController.jogo.valor}"/>
+                        <h:outputLabel styleClass="text" value="Desenvolvedor: "/>
+                        <h:inputText styleClass="border input"
+                                     type="tel"
+                                     value="#{indexController.jogo.desenvolvedor}"/>
+
+                        <h:outputLabel value="Idioma" styleClass="text"/>
+                        <h:selectOneMenu value="#{indexController.jogo.idioma}">
+                            <f:selectItem itemLabel="Selecione..."/>
+                            <f:selectItems
+                                    value="#{indexController.listaIdiomas}"
+                                    var="idioma"
+                                    itemLabel="#{idioma.label}"
+                                    itemValue="#{idioma}"/>
+                        </h:selectOneMenu>
+                        <h:outputLabel styleClass="text" value="Genero"/>
+                        <h:selectOneMenu value="#{indexController.jogo.genero}">
+                            <f:selectItem itemLabel="Selecione..."/>
+                            <f:selectItems
+                                    value="#{indexController.listaGeneros}"
+                                    var="genero"
+                                    itemLabel="#{genero.label}"
+                                    itemValue="#{genero}"/>
+                        </h:selectOneMenu>
+
+
+                        <h:panelGrid id="panelBotoes" columns="4">
+                            <h:commandButton styleClass="button" value="Incluir"
+                                             disabled="#{indexController.jogo.id == null}"
+                                             actionListener="#{indexController.incluir()}"/>
+                            <h:commandButton styleClass="button" value="Alterar"
+                                             actionListener="#{indexController.alterar()}"
+
+                                             disabled="#{indexController.jogo.id == null}"/>
+                            <h:commandButton styleClass="button" value="Excluir"
+                                             actionListener="#{indexController.excluir()}"
+                                             disabled="#{indexController.jogo.id == null}">
+                                <f:ajax execute="@this" render="@form tabela:dataTable"/>
+                            </h:commandButton>
+                            <h:commandButton styleClass="button" value="Limpar"
+                                             actionListener="#{indexController.limpar()}">
+                                <f:ajax render="@form"/>
+                            </h:commandButton>
+                        </h:panelGrid>
+                        <h:commandButton styleClass="button" value="voltar"
+                                         action="menu.xhtml?faces-redirect=true">
+                            <f:ajax execute="@this"/>
+                        </h:commandButton>
+                    </h:panelGrid>
+
+                </h:form>
+                <h:panelGrid styleClass="table-borderless" columns="2">
+
+                    <h:form id="tabela">
+
+                        <h:dataTable value="#{indexController.jogos}" var="jogo"
+                                     styleClass="table"
+                                     headerClass="table-header"
+                                     rowClasses="table-odd-row,table-even-row">
+
+
+                            <h:column>
+                                <f:facet name="header">Nome: </f:facet>
+                                <h:link outcome="#{indexController.editar(jogo)}}">
+                                    #{jogo.nome}
+                                </h:link>
+                            </h:column>
+                            <!--                            <h:column>-->
+                            <!--                                <h:link outcome="#{indexController.editar(jogo)}">-->
+                            <!--                                    <h:graphicImage styleClass="img-thumbnail"-->
+                            <!--                                                    value="resources/images/JhonWickHex.jpg">-->
+                            <!--                                    </h:graphicImage>-->
+                            <!--                                </h:link>-->
+                            <!--                            </h:column>-->
+
+                            <h:column>
+                                <f:facet name="header">Generos</f:facet>
+                                #{jogo.genero.label}
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:form>
+
+                </h:panelGrid>
+            </div>
+        </ui:define>
+
+    </ui:composition>
+
 </h:body>
 </html>
