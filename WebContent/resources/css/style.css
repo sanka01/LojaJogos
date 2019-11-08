@@ -48,6 +48,7 @@ td {
     border-bottom: 1px solid #0dece7;
     height: 30px;
     width: 100%;
+    border-radius: 25px;
     outline: 0;
 }
 
@@ -68,7 +69,9 @@ td {
     color: #e5ecdd;
     background: #254b4a;
 }
-
+.card{
+    background-color: #252c31;
+}
 .button:disabled {
     color: #b9706c;
     background: #2D0C25;
@@ -148,4 +151,8 @@ td {
     background: rgb(51, 91, 92);
     background: -webkit-linear-gradient(top, rgb(52, 91, 91) 5%, rgb(52, 68, 93) 95%);
     background: linear-gradient(to bottom, rgb(57, 89, 91) 5%, rgb(52, 69, 92) 95%);
+}
+
+.navbar-nav .nav-link {
+    color: rgba(7, 255, 94, 0.62);
 }

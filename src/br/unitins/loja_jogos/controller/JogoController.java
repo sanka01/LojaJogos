@@ -1,7 +1,7 @@
 package br.unitins.loja_jogos.controller;
 
 
-import br.unitins.loja_jogos.br.unitins.loja_jogos.application.Util;
+import br.unitins.loja_jogos.application.Util;
 import br.unitins.loja_jogos.dao.DAO;
 import br.unitins.loja_jogos.dao.JogoDAO;
 import br.unitins.loja_jogos.model.Jogo;
@@ -10,16 +10,15 @@ import br.unitins.loja_jogos.model.Tipo;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 @Named
-@RequestScoped
-public class JogoController {
-
-    private static final long serialVersionUID = -8778646997915930699L;
+@ViewScoped
+public class JogoController implements Serializable {
+    private static final long serialVersionUID = 5590814041742196405L;
 
     private Jogo jogo;
 
@@ -28,26 +27,8 @@ public class JogoController {
                 .getCurrentInstance()
                 .getExternalContext()
                 .getFlash();
-        flash.keep("jogoFlash");
+//        flash.keep("jogoFlash");
         jogo = (Jogo) flash.get("jogoFlash");
-    }
-
-    public void incluir() {
-
-        DAO<Jogo> dao = new JogoDAO(null);
-        // faz a inclusao no banco de dados
-        try {
-            dao.create(getJogo());
-            dao.getConnection().commit();
-            Util.addMessageInfo("Inclusão realizada com sucesso.");
-            limpar();
-        } catch (SQLException e) {
-            dao.rollbackConnection();
-            dao.closeConnection();
-            Util.addMessageInfo("Erro ao incluir o Produto no Banco de Dados.");
-            e.printStackTrace();
-        }
-
     }
 
     public void alterar() {
@@ -97,7 +78,6 @@ public class JogoController {
             e.printStackTrace();
         }
         setJogo(jogoBD);
-//		setProduto(dao.findId(jogo.getId()));
     }
 
     public Jogo getJogo() {

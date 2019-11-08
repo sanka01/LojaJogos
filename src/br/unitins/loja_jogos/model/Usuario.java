@@ -1,9 +1,17 @@
 package br.unitins.loja_jogos.model;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 public class Usuario {
     private int id;
+    @NotEmpty(message = "O campo Nome não pode ser vazio")
+    @Size(max = 60, message = "O campo Nome deve conter no máximo 60 caracteres")
     private String nome;
-    private String usuario;
+    @Email
+    private String login;
+    @Size(min = 6, max = 30, message = "A senha deve conter entre 6 e 30 caracteres")
     private String senha;
     private Tipo tipo;
 
@@ -23,12 +31,12 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setLogin(String usuario) {
+        this.login = usuario;
     }
 
     public String getSenha() {

@@ -10,7 +10,52 @@
         <ui:define name="conteudo">
 
 
-            <div class="col-12">
+            <div class="col-md-12">
+                <h:panelGrid styleClass="table-borderless" columns="2">
+
+                    <h:form id="tabela">
+
+                        <h:dataTable value="#{indexController.jogos}" var="jogo"
+                                     styleClass="table"
+                                     headerClass="table-header"
+                                     rowClasses="table-odd-row,table-even-row">
+
+
+                            <h:column>
+                                <f:facet name="header">Nome: </f:facet>
+                                <h:link outcome="#{indexController.editar(jogo)}}">
+                                    #{jogo.nome}
+                                </h:link>
+                            </h:column>
+
+                            <!--                            <h:column>-->
+                            <!--                                <h:link outcome="#{indexController.editar(jogo)}">-->
+                            <!--                                    <h:graphicImage styleClass="img-thumbnail"-->
+                            <!--                                                    value="resources/images/JhonWickHex.jpg">-->
+                            <!--                                    </h:graphicImage>-->
+                            <!--                                </h:link>-->
+                            <!--                            </h:column>-->
+
+                            <h:column>
+                                <f:facet name="header">Generos</f:facet>
+                                #{jogo.genero.label}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Valor: </f:facet>
+                                #{jogo.valor}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">Ações</f:facet>
+                                <h:commandLink value="Detalhes" action="#{indexController.mostrar(jogo.id)}"/>
+
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:form>
+
+                </h:panelGrid>
+            </div>
+            <div class="col-12 #{indexController.usuario.tipo.value == 1 ? '' : 'invisible'}" >
                 <h:form id="formulario">
                     <h:panelGrid id="panelPrincipal" columns="2" styleClass="border_solid">
                         <h:outputLabel styleClass="text" value="Nome:"/>
@@ -23,7 +68,7 @@
 
                         <h:outputLabel styleClass="text" value="Plataforma: "/>
                         <h:inputText styleClass="border input"
-                                       value="#{indexController.jogo.tipo}"/>
+                                     value="#{indexController.jogo.tipo}"/>
 
                         <h:outputLabel styleClass="text" value="Valor: "/>
                         <h:inputText styleClass="border input"
@@ -34,7 +79,7 @@
                                      value="#{indexController.jogo.desenvolvedor}"/>
 
                         <h:outputLabel value="Idioma" styleClass="text"/>
-                        <h:selectOneMenu value="#{indexController.jogo.idioma}">
+                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogo.idioma}">
                             <f:selectItem itemLabel="Selecione..."/>
                             <f:selectItems
                                     value="#{indexController.listaIdiomas}"
@@ -43,7 +88,7 @@
                                     itemValue="#{idioma}"/>
                         </h:selectOneMenu>
                         <h:outputLabel styleClass="text" value="Genero"/>
-                        <h:selectOneMenu value="#{indexController.jogo.genero}">
+                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogo.genero}">
                             <f:selectItem itemLabel="Selecione..."/>
                             <f:selectItems
                                     value="#{indexController.listaGeneros}"
@@ -78,39 +123,6 @@
                     </h:panelGrid>
 
                 </h:form>
-                <h:panelGrid styleClass="table-borderless" columns="2">
-
-                    <h:form id="tabela">
-
-                        <h:dataTable value="#{indexController.jogos}" var="jogo"
-                                     styleClass="table"
-                                     headerClass="table-header"
-                                     rowClasses="table-odd-row,table-even-row">
-
-
-                            <h:column>
-                                <f:facet name="header">Nome: </f:facet>
-                                <h:link outcome="#{indexController.editar(jogo)}}">
-                                    #{jogo.nome}
-                                </h:link>
-                            </h:column>
-                            <!--                            <h:column>-->
-                            <!--                                <h:link outcome="#{indexController.editar(jogo)}">-->
-                            <!--                                    <h:graphicImage styleClass="img-thumbnail"-->
-                            <!--                                                    value="resources/images/JhonWickHex.jpg">-->
-                            <!--                                    </h:graphicImage>-->
-                            <!--                                </h:link>-->
-                            <!--                            </h:column>-->
-
-                            <h:column>
-                                <f:facet name="header">Generos</f:facet>
-                                #{jogo.genero.label}
-                            </h:column>
-
-                        </h:dataTable>
-                    </h:form>
-
-                </h:panelGrid>
             </div>
         </ui:define>
 

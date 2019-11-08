@@ -16,6 +16,47 @@ public class UsuarioDAO extends DAO<Usuario> {
     public UsuarioDAO() {
         super(null);
     }
+    public Usuario login(String login, String senha) {
+
+        Connection conn = getConnection();
+
+        try {
+            PreparedStatement stat = conn.prepareStatement(
+                    "SELECT " +
+                            "  id, " +
+                            "  nome, " +
+                            "  login, " +
+                            "  senha, " +
+                            "  tipo " +
+                            "FROM " +
+                            "  public.usuario " +
+                            "WHERE login = ? AND senha = ? ");
+
+            stat.setString(1, login);
+            stat.setString(2, senha);
+
+            ResultSet rs = stat.executeQuery();
+
+            Usuario usuario = null;
+
+            if(rs.next()) {
+                usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setLogin(rs.getString("login"));
+                usuario.setSenha(rs.getString("senha"));
+                usuario.setTipo(Tipo.valueOf(rs.getInt("tipo")));
+            }
+
+            return usuario;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
+
 
     @Override
     public void create(Usuario usuario) throws SQLException {
@@ -32,7 +73,7 @@ public class UsuarioDAO extends DAO<Usuario> {
                         "VALUES " +
                         " (?, ?, ?, ?) ", Statement.RETURN_GENERATED_KEYS);
         stat.setString(1, usuario.getNome());
-        stat.setString(2, usuario.getUsuario());
+        stat.setString(2, usuario.getLogin());
         stat.setString(3, usuario.getSenha());
         stat.setInt(4, usuario.getTipo().getValue());
 
@@ -53,7 +94,7 @@ public class UsuarioDAO extends DAO<Usuario> {
                         "WHERE " +
                         " id = ? ");
         stat.setString(1, usuario.getNome());
-        stat.setString(2, usuario.getUsuario());
+        stat.setString(2, usuario.getLogin());
         stat.setString(3, usuario.getSenha());
         stat.setInt(4, usuario.getTipo().getValue());
         stat.setInt(5, usuario.getId());
@@ -96,7 +137,7 @@ public class UsuarioDAO extends DAO<Usuario> {
             Usuario usuario = new Usuario();
             usuario.setId(rs.getInt("id"));
             usuario.setNome(rs.getString("nome"));
-            usuario.setUsuario(rs.getString("login"));
+            usuario.setLogin(rs.getString("login"));
             usuario.setSenha(rs.getString("senha"));
             usuario.setTipo(Tipo.valueOf(rs.getInt("tipo")));
 
@@ -132,7 +173,7 @@ public class UsuarioDAO extends DAO<Usuario> {
             usuario = new Usuario();
             usuario.setId(rs.getInt("id"));
             usuario.setNome(rs.getString("nome"));
-            usuario.setUsuario(rs.getString("login"));
+            usuario.setLogin(rs.getString("login"));
             usuario.setSenha(rs.getString("senha"));
             usuario.setTipo(Tipo.valueOf(rs.getInt("tipo")));
         }

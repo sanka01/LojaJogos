@@ -1,25 +1,24 @@
 package br.unitins.loja_jogos.controller;
 
-import br.unitins.loja_jogos.br.unitins.loja_jogos.application.Util;
+import br.unitins.loja_jogos.application.Session;
+import br.unitins.loja_jogos.application.Util;
 import br.unitins.loja_jogos.dao.DAO;
 import br.unitins.loja_jogos.dao.JogoDAO;
-import br.unitins.loja_jogos.model.Genero;
-import br.unitins.loja_jogos.model.Idioma;
-import br.unitins.loja_jogos.model.Jogo;
-import br.unitins.loja_jogos.model.Tipo;
+import br.unitins.loja_jogos.model.*;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Named
-@RequestScoped
-public class indexController {
-    private static final long serialVersionUID = -8778646997915930699L;
+@ViewScoped
+public class indexController  implements Serializable {
+    private static final long serialVersionUID = -6924975549088719269L;
+    private Usuario usuario;
 
     private Jogo jogo;
     private List<Jogo> jogos = null;
@@ -79,7 +78,23 @@ public class indexController {
         }
     }
 
+    public String mostrar(int id){
+        JogoDAO dao = new JogoDAO();
+        Jogo jogo = null;
+        try {
+            jogo = dao.findById(id);
+            Flash flash = FacesContext.
+                    getCurrentInstance().
+                    getExternalContext().getFlash();
+            flash.put("jogoFlash", jogo);
+            return "jogo.xhtml?faces-redirect=true";
+        } catch (SQLException e) {
+            Util.addMessageError("Falha ao buscar detalhes do jogo");
+            e.printStackTrace();
+            return "";
+        }
 
+    }
     public void editar(Jogo jogo) {
         JogoDAO dao = new JogoDAO();
         // buscando um jogo pelo id
@@ -131,4 +146,16 @@ public class indexController {
         return jogos;
     }
 
+    public Usuario getUsuario() {
+        if (usuario == null){
+            usuario = (Usuario) Session.getInstance().getAttribute(Util.USER);
+            if (usuario == null)
+                usuario = new Usuario();
+        }
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 }

@@ -8,43 +8,51 @@
     <ui:composition template="template.xhtml">
 
         <ui:define name="conteudo">
+            <div class="row justify-content-between">
 
+                <div class="card col-md-4" style="width: 18rem;">
+                    <h:form>
 
-            <h1>Perfil</h1>
-            <div class="card" style="width: 18rem;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h:outputLabel value="Nome: " styleClass="card-header"/>
-                        <h:inputText value="nome" styleClass="input"/>
-                    </li>
-                    <li class="list-group-item">
-                        <h:outputLabel value="Usuario:" styleClass="card-header"/>
-                        <h:inputText value="user" styleClass="input"/>
-                    </li>
-                    <li class="list-group-item">
-                        <h:outputLabel value="Senha:" styleClass="card-header"/>
-                        <h:inputSecret value="senha" styleClass="input"/>
-                    </li>
+                        <h1 class="label">Perfil</h1>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <h:outputLabel value="Nome: " styleClass="card-header"/>
+                                <h:inputText value="#{perfilController.usuario.nome}" styleClass="input"/>
+                            </li>
+                            <li class="list-group-item">
+                                <h:outputLabel value="Usuario:" styleClass="card-header"/>
+                                <h:inputText value="#{perfilController.usuario.login}" styleClass="input"/>
+                            </li>
+                            <li class="list-group-item">
+                                <h:outputLabel value="Senha:" styleClass="card-header"/>
+                                <h:inputSecret value="#{perfilController.usuario.senha}" styleClass="input"/>
+                            </li>
 
-                </ul>
-                <!--            APARECE APENAS CASO NÃO ESTEJA LOGADO-->
-                <h:button value="Cadastrar" styleClass="btn btn-success"/>
-            </div>
+                        </ul>
+                        <h:commandButton actionListener="#{perfilController.incluir}" value="Cadastrar"
+                                         styleClass="btn btn-success"/>
+                    </h:form>
+                </div>
 
-            <h1>Login</h1>
-            <div class="card" style="width: 18rem;">
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h:outputLabel value="Usuario:" styleClass="card-header"/>
-                        <h:inputText value="user" styleClass="input"/>
-                    </li>
-                    <li class="list-group-item">
-                        <h:outputLabel value="Senha:" styleClass="card-header"/>
-                        <h:inputSecret value="senha" styleClass="input"/>
-                    </li>
+                <div class="card col-md-4" style="width: 18rem; height: 20rem;">
+                    <h:form>
+                    <h1>Login</h1>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <h:outputLabel value="Usuario:" styleClass="card-header"/>
+                            <h:inputText value="#{perfilController.usuario.login}" styleClass="input"/>
+                        </li>
+                        <li class="list-group-item">
+                            <h:outputLabel value="Senha:" styleClass="card-header"/>
+                            <h:inputSecret value="#{perfilController.usuario.senha}" styleClass="input"/>
+                        </li>
 
-                </ul>
-                <h:button value="Logar" styleClass="btn btn-success"/>
+                    </ul>
+                    <h:commandButton action="#{perfilController.logar}" value="Logar"
+                                     styleClass="btn btn-success"/>
+                    </h:form>
+                </div>
+
             </div>
         </ui:define>
     </ui:composition>

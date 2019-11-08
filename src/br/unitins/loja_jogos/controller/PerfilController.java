@@ -1,11 +1,13 @@
 package br.unitins.loja_jogos.controller;
 
-import br.unitins.loja_jogos.br.unitins.loja_jogos.application.Util;
+import br.unitins.loja_jogos.application.Session;
+import br.unitins.loja_jogos.application.Util;
 import br.unitins.loja_jogos.dao.DAO;
 import br.unitins.loja_jogos.dao.UsuarioDAO;
 import br.unitins.loja_jogos.model.Tipo;
 import br.unitins.loja_jogos.model.Usuario;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -16,11 +18,23 @@ import java.util.List;
 @Named
 @ViewScoped
 public class PerfilController implements Serializable {
-    private static final long serialVersionUID = 7483503027113826339L;
 
     private Usuario usuario;
 
     private List<Usuario> usuarioList;
+
+    public String logar() {
+        UsuarioDAO dao = new UsuarioDAO();
+        String hashSenha = Util.hashSHA256(getUsuario().getSenha());
+        Usuario usuario = dao.login(getUsuario().getLogin(), hashSenha);
+
+        if (usuario != null) {
+            Session.getInstance().setAttribute(Util.USER, usuario);
+            return "index.xhtml?faces-redirect=true";
+        }
+        Util.addMessageError("Usuário ou Senha Inválido.");
+        return null;
+    }
 
     public List<Usuario> getListaUsuario() {
         if (usuarioList == null) {
@@ -41,6 +55,9 @@ public class PerfilController implements Serializable {
             DAO<Usuario> dao = new UsuarioDAO();
             // faz a inclusao no banco de dados
             try {
+                String hashSenha = Util.hashSHA256(getUsuario().getSenha());
+                getUsuario().setSenha(hashSenha);
+                getUsuario().setTipo(Tipo.CLIENTE);
                 dao.create(getUsuario());
                 dao.getConnection().commit();
                 Util.addMessageInfo("Inclusão realizada com sucesso.");
@@ -49,7 +66,7 @@ public class PerfilController implements Serializable {
             } catch (SQLException e) {
                 dao.rollbackConnection();
                 dao.closeConnection();
-                Util.addMessageInfo("Erro ao incluir o Usuário no Banco de Dados.");
+                Util.addMessageError("Erro ao incluir o Usuário no Banco de Dados.");
                 e.printStackTrace();
             }
         }
@@ -60,6 +77,8 @@ public class PerfilController implements Serializable {
             DAO<Usuario> dao = new UsuarioDAO();
             // faz a alteracao no banco de dados
             try {
+                String hashSenha = Util.hashSHA256(getUsuario().getSenha());
+                getUsuario().setSenha(hashSenha);
                 dao.update(getUsuario());
                 dao.getConnection().commit();
                 Util.addMessageInfo("Alteração realizada com sucesso");
@@ -97,11 +116,6 @@ public class PerfilController implements Serializable {
             Util.addMessageWarn("O campo senha deve ser informado.");
             return false;
         }
-//		if (getUsuario().getSenha() == null ||
-//				getUsuario().getSenha().trim().equals("") ) {
-//			Util.addMessageError("O campo senha deve ser informado.");
-//			return false;
-//		}
         return true;
     }
 
