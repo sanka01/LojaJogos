@@ -1,51 +1,53 @@
 <!DOCTYPE html>
-<html lang="pt-br"
-      xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="template.xhtml">
+    <ui:define name="conteudo">
 
-<h:body>
-    <ui:composition template="template.xhtml">
-        <ui:define name="conteudo">
-            <div class="row">
-                <div class="center-block col-md-4 order-md-2 mb-4">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span class="text-muted">Carrinho</span>
-                        <span class="badge badge-secondary badge-pill">3</span>
-                    </h4>
-                    <ul class="list-group mb-3">
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Jogo 1</h6>
-                                <small class="text-muted">descrição</small>
-                            </div>
-                            <span class="text-muted">$12</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Jogo 2</h6>
-                                <small class="text-muted">descrição</small>
-                            </div>
-                            <span class="text-muted">$8</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between lh-condensed">
-                            <div>
-                                <h6 class="my-0">Jogo 3</h6>
-                                <small class="text-muted">descrição</small>
-                            </div>
-                            <span class="text-muted">$5</span>
-                        </li>
+        <center>
+            <h1>Carrinho</h1>
 
-                        <li class="list-group-item d-flex justify-content-between">
-                            <span>Total (USD)</span>
-                            <strong>$20</strong>
-                        </li>
-                    </ul>
-                </div>
+            <h:form>
+                <h:messages infoStyle="color:green"
+                            warnStyle="color:orange"
+                            errorStyle="color:red"/>
 
-            </div>
-            <h:commandButton styleClass="btn btn-primary" value="Finalizar compra"/>
-        </ui:define>
-    </ui:composition>
-</h:body>
+                <h:dataTable styleClass="table"
+                             rowIndexVar="row"
+                             headerClass="table-header"
+                             rowClasses="table-odd-row,table-even-row" value="#{carrinhoController.pedido.items}"
+                             var="obj">
+                    <h:column>
+                        <f:facet name="header">Nome</f:facet>
+                        <h:outputLabel value="#{obj.jogo.nome}"/>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Valor</f:facet>
+                        <h:outputLabel value="#{obj.valor}">
+                            <f:convertNumber locale="pt_BR" currencySymbol="R$" type="currency"/>
+                        </h:outputLabel>
+                    </h:column>
+
+                    <h:column>
+                        <f:facet name="header">Ação</f:facet>
+                        <h:commandLink value="remover"
+                                       styleClass="link"
+                                       actionListener="#{carrinhoController.remover(carrinhoController.pedido.items.indexOf(obj))}"/>
+                    </h:column>
+
+                </h:dataTable>
+                <h:commandLink value="Finalizar Venda"
+                               styleClass="link"
+                               actionListener="#{carrinhoController.finalizar}">
+                    <f:ajax execute="@form" render="@form"/>
+                </h:commandLink>
+
+            </h:form>
+        </center>
+    </ui:define>
+</ui:composition>
+
 </html>

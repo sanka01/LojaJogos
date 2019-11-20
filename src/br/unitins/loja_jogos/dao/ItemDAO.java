@@ -102,7 +102,7 @@ public class ItemDAO extends DAO<Item> {
 
     }
 
-    public Item findId(Integer id) throws SQLException {
+    public Item findById(Integer id) throws SQLException {
         Connection conn = getConnection();
 
         PreparedStatement stat = conn.prepareStatement(

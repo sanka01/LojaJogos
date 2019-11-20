@@ -110,6 +110,7 @@ td {
     border-radius: 20px;
     border-style: solid;
     padding: 50px;
+    border-collapse: unset;
 }
 
 .table {
@@ -144,13 +145,23 @@ td {
 }
 
 .link {
-    border: none;
+    color: #fff;
+    top: 0;
     cursor: pointer;
-    text-decoration: none !important;
-    color: #e5ecdd !important;
-    background: rgb(51, 91, 92);
-    background: -webkit-linear-gradient(top, rgb(52, 91, 91) 5%, rgb(52, 68, 93) 95%);
-    background: linear-gradient(to bottom, rgb(57, 89, 91) 5%, rgb(52, 69, 92) 95%);
+    border: 2px solid hsla(0,0%,100%,.8);
+    padding: 5px 17px 7px;
+    border-radius: 20px;
+    line-height: 24px;
+    margin-right: 18px;
+    text-decoration: none;
+    outline-offset: 1px;
+    outline-width: 2px;
+    outline-color: #00b0f4;
+    font-weight: inherit;
+    font-style: inherit;
+    font-family: inherit;
+    font-size: 100%;
+    vertical-align: baseline;
 }
 
 .navbar-nav .nav-link {

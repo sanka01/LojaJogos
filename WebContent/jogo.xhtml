@@ -9,37 +9,34 @@
 
         <ui:define name="conteudo">
 
-            <h:outputLabel value="#{jogoController.jogo.nome}"/>
-<!--            <h:graphicImage styleClass="img-fluid"-->
-<!--                            value="resources/images/JhonWickHex.jpg"/>-->
+            <h1><h:outputLabel value="#{jogoController.jogo.nome}"/></h1>
+            <!--            <h:graphicImage styleClass="img-fluid"-->
+            <!--                            value="resources/images/JhonWickHex.jpg"/>-->
 
             <br/>
             <br/>
             <div>
-                <h1 class="alert alert-dark text-dark">Descrição</h1>
-                <h:outputLabel value="#{jogoController.jogo.descricao}"/>
+                <h:outputText value="#{jogoController.jogo.descricao}" escape="false"/>
             </div>
 
-            <br/>
+            <!--            <div class="card" style="width: 18rem;">-->
+            <!--                <h1 class="alert alert-dark text-dark">Sobre o Jogo</h1>-->
+            <!--                <ul class="list-group list-group-flush">-->
+            <!--                    <li class="list-group-item">-->
+            <!--                        <h:outputLabel value="Tags: " styleClass="card-header"/>-->
+            <!--                        <h:outputLabel value="#{jogoController.jogo.genero.label}"/>-->
+            <!--                    </li>-->
+            <!--                    <li class="list-group-item">-->
+            <!--                        <h:outputLabel value="Desenvolvedor:" styleClass="card-header"/>-->
+            <!--                        <h:outputLabel value="#{jogoController.jogo.desenvolvedor}"/>-->
+            <!--                    </li>-->
+            <!--                    <li class="list-group-item">-->
+            <!--                        <h:outputLabel value="Idiomas" styleClass="card-header"/>-->
+            <!--                        <h:outputLabel value="#{jogoController.jogo.idioma.label}"/>-->
+            <!--                    </li>-->
 
-            <div class="card" style="width: 18rem;">
-                <h1 class="alert alert-dark text-dark">Sobre o Jogo</h1>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <h:outputLabel value="Tags: " styleClass="card-header"/>
-                        <h:outputLabel value="#{jogoController.jogo.genero.label}"/>
-                    </li>
-                    <li class="list-group-item">
-                        <h:outputLabel value="Desenvolvedor:" styleClass="card-header"/>
-                        <h:outputLabel value="#{jogoController.jogo.desenvolvedor}"/>
-                    </li>
-                    <li class="list-group-item">
-                        <h:outputLabel value="Idiomas" styleClass="card-header"/>
-                        <h:outputLabel value="#{jogoController.jogo.idioma.label}"/>
-                    </li>
-
-                </ul>
-            </div>
+            <!--                </ul>-->
+            <!--            </div>-->
         </ui:define>
 
     </ui:composition>

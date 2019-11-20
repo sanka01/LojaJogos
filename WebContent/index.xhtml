@@ -11,11 +11,24 @@
 
 
             <div class="col-md-12">
-                <h:panelGrid styleClass="table-borderless" columns="2">
+                <h:panelGrid id="listaJogos" styleClass="table-borderless" columns="2">
+
 
                     <h:form id="tabela">
 
-                        <h:dataTable value="#{indexController.jogos}" var="jogo"
+                        <h:panelGrid id="panelForm"  columns="3">
+
+                            <h:outputLabel value="Nome do Produto: " />
+                            <h:inputText value="#{indexController.nome}"  styleClass="border input"/>
+
+                            <h:commandLink value="Pesquisar"
+                                             actionListener="#{indexController.pesquisar}"  styleClass="link">
+                                <f:ajax execute="panelForm" render="@all" />
+                            </h:commandLink>
+
+                        </h:panelGrid>
+
+                        <h:dataTable value="#{indexController.jogos}" var="j"
                                      styleClass="table"
                                      headerClass="table-header"
                                      rowClasses="table-odd-row,table-even-row">
@@ -23,13 +36,17 @@
 
                             <h:column>
                                 <f:facet name="header">Nome: </f:facet>
-                                <h:link outcome="#{indexController.editar(jogo)}}">
-                                    #{jogo.nome}
-                                </h:link>
+                                <h:commandLink value="#{j.nome}"
+                                               style="color: #6685cc"
+                                               actionListener="#{indexController.editar(j)}">
+                                    <f:ajax
+                                            render="formulario"
+                                            execute="@this"/>
+                                </h:commandLink>
                             </h:column>
 
                             <!--                            <h:column>-->
-                            <!--                                <h:link outcome="#{indexController.editar(jogo)}">-->
+                            <!--                                <h:link outcome="#{indexController.editar(j)}">-->
                             <!--                                    <h:graphicImage styleClass="img-thumbnail"-->
                             <!--                                                    value="resources/images/JhonWickHex.jpg">-->
                             <!--                                    </h:graphicImage>-->
@@ -38,15 +55,19 @@
 
                             <h:column>
                                 <f:facet name="header">Generos</f:facet>
-                                #{jogo.genero.label}
+                                #{j.genero.label}
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Valor: </f:facet>
-                                #{jogo.valor}
+                                #{j.valor}
                             </h:column>
                             <h:column>
                                 <f:facet name="header">Ações</f:facet>
-                                <h:commandLink value="Detalhes" action="#{indexController.mostrar(jogo.id)}"/>
+                                <h:commandLink value="Detalhes" styleClass="link" action="#{indexController.mostrar(j.id)}"/>
+                                <h:commandLink value="Adicionar ao carrinho" styleClass="link"
+                                               actionListener="#{indexController.adicionar(j.id)}" >
+                                    <f:ajax render="@all" execute="@this" />
+                                </h:commandLink>
 
                             </h:column>
 
@@ -55,31 +76,34 @@
 
                 </h:panelGrid>
             </div>
-            <div class="col-12 #{indexController.usuario.tipo.value == 1 ? '' : 'invisible'}" >
+            <div class="col-12 #{indexController.usuario.tipo.value == 1 ? '' : 'invisible'}">
                 <h:form id="formulario">
                     <h:panelGrid id="panelPrincipal" columns="2" styleClass="border_solid">
                         <h:outputLabel styleClass="text" value="Nome:"/>
                         <h:inputText styleClass="border input"
-                                     value="#{indexController.jogo.nome}"/>
+                                     value="#{indexController.jogoView.nome}"/>
 
                         <h:outputLabel styleClass="text" value="Descrição: "/>
                         <h:inputTextarea styleClass="border input text-area"
-                                         value="#{indexController.jogo.descricao}"/>
+                                         style="margin-top: 0;
+                                                margin-bottom: 4px;
+                                                width: 500px;
+                                                height: 500px;"
+                                         value="#{indexController.jogoView.descricao}"/>
 
                         <h:outputLabel styleClass="text" value="Plataforma: "/>
                         <h:inputText styleClass="border input"
-                                     value="#{indexController.jogo.tipo}"/>
+                                     value="#{indexController.jogoView.tipo}"/>
 
                         <h:outputLabel styleClass="text" value="Valor: "/>
                         <h:inputText styleClass="border input"
-                                     value="#{indexController.jogo.valor}"/>
+                                     value="#{indexController.jogoView.valor}"/>
                         <h:outputLabel styleClass="text" value="Desenvolvedor: "/>
                         <h:inputText styleClass="border input"
-                                     type="tel"
-                                     value="#{indexController.jogo.desenvolvedor}"/>
+                                     value="#{indexController.jogoView.desenvolvedor}"/>
 
                         <h:outputLabel value="Idioma" styleClass="text"/>
-                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogo.idioma}">
+                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogoView.idioma}">
                             <f:selectItem itemLabel="Selecione..."/>
                             <f:selectItems
                                     value="#{indexController.listaIdiomas}"
@@ -88,7 +112,7 @@
                                     itemValue="#{idioma}"/>
                         </h:selectOneMenu>
                         <h:outputLabel styleClass="text" value="Genero"/>
-                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogo.genero}">
+                        <h:selectOneMenu styleClass="form-control" value="#{indexController.jogoView.genero}">
                             <f:selectItem itemLabel="Selecione..."/>
                             <f:selectItems
                                     value="#{indexController.listaGeneros}"
@@ -100,16 +124,17 @@
 
                         <h:panelGrid id="panelBotoes" columns="4">
                             <h:commandButton styleClass="button" value="Incluir"
-                                             disabled="#{indexController.jogo.id == null}"
+                                             disabled="#{indexController.jogoView.id != null}"
                                              actionListener="#{indexController.incluir()}"/>
+
                             <h:commandButton styleClass="button" value="Alterar"
                                              actionListener="#{indexController.alterar()}"
+                                             disabled="#{indexController.jogoView.id == null}"/>
 
-                                             disabled="#{indexController.jogo.id == null}"/>
                             <h:commandButton styleClass="button" value="Excluir"
                                              actionListener="#{indexController.excluir()}"
-                                             disabled="#{indexController.jogo.id == null}">
-                                <f:ajax execute="@this" render="@form tabela:dataTable"/>
+                                             disabled="#{indexController.jogoView.id == null}">
+                                <f:ajax execute="@this" render="@all"/>
                             </h:commandButton>
                             <h:commandButton styleClass="button" value="Limpar"
                                              actionListener="#{indexController.limpar()}">

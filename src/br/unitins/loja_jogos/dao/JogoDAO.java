@@ -39,11 +39,11 @@ public class JogoDAO extends DAO<Jogo> {
         stat.setString(1, jogo.getNome());
         stat.setString(2, jogo.getDescricao());
         stat.setString(3, jogo.getTipo());
-        stat.setFloat(4, jogo.getValor());
+        stat.setFloat( 4, jogo.getValor());
         stat.setDouble(5, jogo.getDesconto());
         stat.setString(6, jogo.getDesenvolvedor());
-        stat.setInt(7, jogo.getGenero().getValue());
-        stat.setInt(8, jogo.getIdioma().getValue());
+        stat.setInt(   7, jogo.getGenero().getValue());
+        stat.setInt(   8, jogo.getIdioma().getValue());
 
         stat.execute();
 
@@ -69,10 +69,11 @@ public class JogoDAO extends DAO<Jogo> {
         stat.setString(2, jogo.getDescricao());
         stat.setString(3, jogo.getTipo());
         stat.setFloat(4, jogo.getValor());
-        stat.setString(5, jogo.getDescricao());
+        stat.setDouble(5, jogo.getDesconto());
         stat.setString(6, jogo.getDesenvolvedor());
         stat.setInt(7, jogo.getGenero().getValue());
         stat.setInt(8, jogo.getIdioma().getValue());
+        stat.setInt(9, jogo.getId());
 
 
         stat.execute();
@@ -172,6 +173,50 @@ public class JogoDAO extends DAO<Jogo> {
         }
 
         return jogo;
+
+    }
+
+    public List<Jogo> findByNome(String nome) throws SQLException {
+        Connection conn = getConnection();
+
+        PreparedStatement stat = conn.prepareStatement(
+                "SELECT " +
+                        " id," +
+                        " nome, " +
+                        " descricao, " +
+                        " tipo, " +
+                        " valor, " +
+                        " desconto, " +
+                        " desenvolvedor, " +
+                        " genero, " +
+                        " idioma " +
+                        "FROM " +
+                        "  public.jogo " +
+                        "WHERE nome ilike ?");
+
+        stat.setString(1, nome == null ? "%" : "%"+nome+"%");
+
+        ResultSet rs = stat.executeQuery();
+
+        Jogo jogo;
+        List<Jogo> jogos = new ArrayList<>();
+        while (rs.next()) {
+            jogo = new Jogo();
+            jogo.setId(rs.getInt("id"));
+            jogo.setNome(rs.getString("nome"));
+            jogo.setDescricao(rs.getString("descricao"));
+            jogo.setTipo(rs.getString("tipo"));
+            jogo.setValor(rs.getFloat("valor"));
+            jogo.setDesconto(rs.getFloat("desconto"));
+            jogo.setDesenvolvedor(rs.getString("desenvolvedor"));
+            jogo.setGenero(Genero.valueOf(rs.getInt("genero")));
+            jogo.setIdioma(Idioma.valueOf(rs.getInt("idioma")));
+            jogos.add(jogo);
+
+        }
+        if (jogos == null)
+            return new ArrayList<>();
+        return jogos;
 
     }
 }

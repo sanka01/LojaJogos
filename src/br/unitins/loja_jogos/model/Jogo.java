@@ -1,7 +1,7 @@
 package br.unitins.loja_jogos.model;
 
 public class Jogo implements Cloneable {
-    private int id;
+    private Integer id;
     private String nome;
     private String descricao;
     private String tipo;
@@ -14,23 +14,11 @@ public class Jogo implements Cloneable {
     public Jogo() {
     }
 
-    public Jogo(int id, String nome, String descricao, String tipo, float valor, float desconto, String desenvolvedor, Genero genero, Idioma idioma) {
-        this.id = id;
-        this.nome = nome;
-        this.descricao = descricao;
-        this.tipo = tipo;
-        this.valor = valor;
-        this.desconto = desconto;
-        this.desenvolvedor = desenvolvedor;
-        this.genero = genero;
-        this.idioma = idioma;
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
